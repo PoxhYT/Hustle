@@ -21,26 +21,47 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
-          child: Container(
-        height: 1.sh,
-        color: Colors.red,
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  UserCredential credentials = await authAPI.signInWithGoogle();
-                  logger.i("${credentials.user!.displayName!} is logged in with Google");
-                } catch (e) {
-                  logger.i(e);
-                }
-              },
-              child: Text('Sign in with Google'),
+      child: Scaffold(
+        appBar: _buildAppBar(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Welcome ${authAPI.getDisplayName()!}',
+                  style: const TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      )),
+      ),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      elevation: 0,
+      title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Icon(
+          Icons.menu,
+          color: Colors.grey,
+          size: 30,
+        ),
+        Container(
+          height: 40,
+          width: 40,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(authAPI.getPofilePicture()!),
+          ),
+        ),
+      ]),
     );
   }
 }

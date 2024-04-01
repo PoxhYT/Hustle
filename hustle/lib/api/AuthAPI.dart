@@ -15,4 +15,13 @@ class AuthAPI {
 
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
+
+  String? getDisplayName() {
+    return FirebaseAuth.instance.currentUser?.displayName;  
+  }
+
+  String? getPofilePicture() {
+    return FirebaseAuth.instance.currentUser?.photoURL;
+  }
+
 }
