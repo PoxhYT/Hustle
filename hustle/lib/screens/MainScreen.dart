@@ -13,6 +13,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   AuthAPI authAPI = AuthAPI();
+  List<Todo> todoList = [];
+  final _todoController = TextEditingController();
 
   var logger = Logger(
     printer: PrettyPrinter(),
@@ -22,22 +24,19 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     TodoAPI todoAPI = TodoAPI(authAPI: authAPI);
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: _buildAppBar(),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: _buildAppBar(),
+      body: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 15,
+            ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Welcome ${authAPI.getDisplayName()!}',
-                  style: const TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                searchBox(),
                 FutureBuilder<List<Todo>>(
                   future: todoAPI.getTodos(),
                   builder: (context, snapshot) {
@@ -45,27 +44,91 @@ class _MainScreenState extends State<MainScreen> {
                       return CircularProgressIndicator();
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
-                    } else if (snapshot.hasData) {
-                      final _todos = snapshot.data!;
-                      return Container(
-                        height: 200,
-                        child: ListView.builder(
-                          itemCount: _todos.length,
-                          itemBuilder: (context, index) {
-                            final todo = _todos[index];
-                            return buildTodo(todo);
-                          },
+                    }
+
+                    todoList = snapshot.data!;
+
+                    return Expanded(
+                        child: ListView(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 50,
+                                bottom: 20,
+                              ),
+                              child: const Text(
+                                'All ToDos',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            for (Todo todo in snapshot.data!)
+                              buildTodo(todo)
+                          ],
                         ),
                       );
-                    } else {
-                      return Text('No data available');
-                    }
                   },
                 )
               ],
             ),
           ),
-        ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(
+                    bottom: 20,
+                    right: 20,
+                    left: 20,
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.0, 0.0),
+                        blurRadius: 10.0,
+                        spreadRadius: 0.0,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextField(
+                    controller: _todoController,
+                    decoration: InputDecoration(
+                        hintText: 'Add a new todo item',
+                        border: InputBorder.none),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  bottom: 20,
+                  right: 20,
+                ),
+                padding: EdgeInsets.only(left: 20, right: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.blue
+                ),
+                child: const Text(
+                    '+',
+                    style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.white
+                    ),
+                  ),
+              ),
+            ]),
+          ),
+        ],
       ),
     );
   }
@@ -84,6 +147,51 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ]),
     );
+  }
+
+  Widget searchBox() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: TextField(
+        onChanged: (value) => _runFilter(value),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(0),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Colors.black,
+            size: 20,
+          ),
+          prefixIconConstraints: BoxConstraints(
+            maxHeight: 20,
+            minWidth: 25,
+          ),
+          border: InputBorder.none,
+          hintText: 'Search',
+          hintStyle: TextStyle(color: Colors.grey),
+        ),
+      ),
+    );
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List<Todo> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = todoList;
+    } else {
+      results = todoList
+          .where((item) => item.name
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+
+    setState(() {
+      todoList = results;
+    });
   }
 
   Widget buildTodo(Todo todo) {

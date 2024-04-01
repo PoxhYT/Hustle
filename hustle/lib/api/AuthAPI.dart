@@ -27,5 +27,4 @@ class AuthAPI {
   String? getPofilePicture() {
     return FirebaseAuth.instance.currentUser?.photoURL;
   }
-
 }
