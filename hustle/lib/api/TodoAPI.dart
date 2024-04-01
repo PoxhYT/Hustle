@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:hustle/api/AuthAPI.dart';
 import 'package:hustle/models/Todo.dart';
 import 'package:logger/logger.dart';
@@ -69,8 +70,8 @@ class TodoAPI {
             todosSnapshot.data() as Map<String, dynamic>;
         List<dynamic> existingTodos = todosData['todos'] ?? [];
 
-        int todoIndex = existingTodos.indexWhere(
-            (todo) => (todo as Map<String, dynamic>)['name'] == targetTodo.name);
+        int todoIndex = existingTodos.indexWhere((todo) =>
+            (todo as Map<String, dynamic>)['name'] == targetTodo.name);
 
         if (todoIndex != -1) {
           existingTodos.removeAt(todoIndex);
@@ -80,5 +81,56 @@ class TodoAPI {
     } catch (e) {
       print('Error deleting todo: $e');
     }
+  }
+
+  Future<bool> todoExists(String todoName) async {
+    try {
+      DocumentReference todosRef =
+          FirebaseFirestore.instance.collection('todos').doc(authAPI.getUID());
+
+      DocumentSnapshot todosSnapshot = await todosRef.get();
+
+      if (todosSnapshot.exists) {
+        Map<String, dynamic> todosData =
+            todosSnapshot.data() as Map<String, dynamic>;
+        List<dynamic> existingTodos = todosData['todos'] ?? [];
+
+        return existingTodos
+            .any((todo) => (todo as Map<String, dynamic>)['name'] == todoName);
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Error checking if todo exists: $e');
+      return false;
+    }
+  }
+
+  Future<void> showTodoExistsDialog(
+      String todoName, BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Todo Exists'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('The todo item "$todoName" already exists.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

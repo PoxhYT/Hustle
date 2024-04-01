@@ -45,30 +45,30 @@ class _MainScreenState extends State<MainScreen> {
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       }
-      
+
                       todoList = snapshot.data!;
-      
+
                       return Expanded(
-                          child: ListView(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 50,
-                                  bottom: 20,
-                                ),
-                                child: const Text(
-                                  'All ToDos',
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                        child: ListView(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 50,
+                                bottom: 20,
+                              ),
+                              child: const Text(
+                                'All ToDos',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              for (Todo todo in snapshot.data!)
-                                buildTodo(todo, todoAPI)
-                            ],
-                          ),
-                        );
+                            ),
+                            for (Todo todo in snapshot.data!)
+                              buildTodo(todo, todoAPI)
+                          ],
+                        ),
+                      );
                     },
                   )
                 ],
@@ -79,12 +79,12 @@ class _MainScreenState extends State<MainScreen> {
               child: Row(children: [
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       bottom: 20,
                       right: 20,
                       left: 20,
                     ),
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 5,
                     ),
@@ -102,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     child: TextField(
                       controller: _todoController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: 'Add a new todo item',
                           border: InputBorder.none),
                     ),
@@ -110,12 +110,17 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    Todo newTodo = Todo(name: _todoController.text, finished: false);
-                    await todoAPI.addTodo(newTodo);
-                    _todoController.clear(); 
-                    setState(() {
-                      
-                    });
+                    String name = _todoController.text;
+                    bool doesTodoExist = await todoAPI.todoExists(name);
+                    if (!doesTodoExist) {
+                      Todo newTodo = Todo(name: name, finished: false);
+                      await todoAPI.addTodo(newTodo);
+                      _todoController.clear();
+                      setState(() {});
+                    } else {
+                      await todoAPI.showTodoExistsDialog(name, context);
+                      _todoController.clear();
+                    }
                   },
                   child: Container(
                     margin: const EdgeInsets.only(
@@ -124,16 +129,12 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     padding: EdgeInsets.only(left: 20, right: 20),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.blue
-                    ),
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.blue),
                     child: const Text(
-                        '+',
-                        style: TextStyle(
-                          fontSize: 40,
-                          color: Colors.white
-                        ),
-                      ),
+                      '+',
+                      style: TextStyle(fontSize: 40, color: Colors.white),
+                    ),
                   ),
                 ),
               ]),
