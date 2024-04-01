@@ -1,4 +1,4 @@
-package com.example.hustle
+package de.poxh.hustle
 
 import io.flutter.embedding.android.FlutterActivity
 
