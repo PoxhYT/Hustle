@@ -65,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
                                 ),
                               ),
                               for (Todo todo in snapshot.data!)
-                                buildTodo(todo)
+                                buildTodo(todo, todoAPI)
                             ],
                           ),
                         );
@@ -144,7 +144,7 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget buildTodo(Todo todo) {
+  Widget buildTodo(Todo todo, TodoAPI todoAPI) {
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       child: ListTile(
@@ -179,7 +179,10 @@ class _MainScreenState extends State<MainScreen> {
             color: Colors.white,
             iconSize: 18,
             icon: const Icon(Icons.delete),
-            onPressed: () {},
+            onPressed: () async {
+              await todoAPI.deleteTodo(todo);
+              setState(() {});
+            },
           ),
         ),
       ),

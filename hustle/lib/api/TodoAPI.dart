@@ -56,4 +56,29 @@ class TodoAPI {
       print('Error adding todo: $e');
     }
   }
+
+  Future<void> deleteTodo(Todo targetTodo) async {
+    try {
+      DocumentReference todosRef =
+          FirebaseFirestore.instance.collection('todos').doc(authAPI.getUID());
+
+      DocumentSnapshot todosSnapshot = await todosRef.get();
+
+      if (todosSnapshot.exists) {
+        Map<String, dynamic> todosData =
+            todosSnapshot.data() as Map<String, dynamic>;
+        List<dynamic> existingTodos = todosData['todos'] ?? [];
+
+        int todoIndex = existingTodos.indexWhere(
+            (todo) => (todo as Map<String, dynamic>)['name'] == targetTodo.name);
+
+        if (todoIndex != -1) {
+          existingTodos.removeAt(todoIndex);
+          await todosRef.update({'todos': existingTodos});
+        }
+      }
+    } catch (e) {
+      print('Error deleting todo: $e');
+    }
+  }
 }
