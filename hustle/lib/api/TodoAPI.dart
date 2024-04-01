@@ -133,4 +133,37 @@ class TodoAPI {
       },
     );
   }
+
+  Future<void> toggleTodoStatus(String todoName) async {
+    try {
+      DocumentReference todosRef =
+          FirebaseFirestore.instance.collection('todos').doc(authAPI.getUID());
+
+      DocumentSnapshot todosSnapshot = await todosRef.get();
+
+      if (todosSnapshot.exists) {
+        Map<String, dynamic> todosData =
+            todosSnapshot.data() as Map<String, dynamic>;
+        List<dynamic> existingTodos = todosData['todos'] ?? [];
+
+        int todoIndex = existingTodos.indexWhere(
+            (todo) => (todo as Map<String, dynamic>)['name'] == todoName);
+
+        if (todoIndex != -1) {
+          Map<String, dynamic> updatedTodo =
+              existingTodos[todoIndex] as Map<String, dynamic>;
+          updatedTodo['finished'] = !updatedTodo['finished'];
+          existingTodos[todoIndex] = updatedTodo;
+
+          await todosRef.update({'todos': existingTodos});
+        } else {
+          print('Todo not found: $todoName');
+        }
+      } else {
+        print('No todos found for the current user');
+      }
+    } catch (e) {
+      print('Error toggling todo status: $e');
+    }
+  }
 }

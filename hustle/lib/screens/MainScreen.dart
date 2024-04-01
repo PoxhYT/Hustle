@@ -149,15 +149,20 @@ class _MainScreenState extends State<MainScreen> {
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       child: ListTile(
-        onTap: () {},
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         tileColor: const Color.fromARGB(255, 236, 236, 236),
-        leading: Icon(
-          todo.finished ? Icons.check_box : Icons.check_box_outline_blank,
-          color: Colors.blue,
+        leading: GestureDetector(
+          onTap: () async {
+            await todoAPI.toggleTodoStatus(todo.name);
+            setState(() {});
+          },
+          child: Icon(
+            todo.finished ? Icons.check_box : Icons.check_box_outline_blank,
+            color: Colors.blue,
+          ),
         ),
         title: Text(
           todo.name,
