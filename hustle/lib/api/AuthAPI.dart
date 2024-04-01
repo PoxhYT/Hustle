@@ -16,6 +16,10 @@ class AuthAPI {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  String? getUID() {
+    return FirebaseAuth.instance.currentUser?.uid;
+  }
+
   String? getDisplayName() {
     return FirebaseAuth.instance.currentUser?.displayName;  
   }
