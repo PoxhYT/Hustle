@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,19 +49,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCQL6HUyJ_-8PCLQoDS7rMcObuZUZlhdzI',
-    appId: '1:138749187378:web:badee34b2703261e86b32b',
-    messagingSenderId: '138749187378',
-    projectId: 'hustle-c1c70',
-    authDomain: 'hustle-c1c70.firebaseapp.com',
-    storageBucket: 'hustle-c1c70.appspot.com',
-    measurementId: 'G-TD545DXTWC',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAtSEI2shCD9HaCEGZIOchBZG_mP12tedw',
-    appId: '1:138749187378:android:dad296eb103cc7fe86b32b',
+    appId: '1:138749187378:android:65ade0ec1e5e908e86b32b',
     messagingSenderId: '138749187378',
     projectId: 'hustle-c1c70',
     storageBucket: 'hustle-c1c70.appspot.com',
@@ -63,19 +59,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyA16P1VQay39VCrHUQBK6Uj9TPelUn23-E',
-    appId: '1:138749187378:ios:735d92a3b1b0503786b32b',
+    appId: '1:138749187378:ios:75068b4400d2410c86b32b',
     messagingSenderId: '138749187378',
     projectId: 'hustle-c1c70',
     storageBucket: 'hustle-c1c70.appspot.com',
-    iosBundleId: 'com.example.hustle',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyA16P1VQay39VCrHUQBK6Uj9TPelUn23-E',
-    appId: '1:138749187378:ios:e46c47474bec490986b32b',
-    messagingSenderId: '138749187378',
-    projectId: 'hustle-c1c70',
-    storageBucket: 'hustle-c1c70.appspot.com',
-    iosBundleId: 'com.example.hustle.RunnerTests',
+    androidClientId: '138749187378-qeco7ch1o8dl7edldprokk9qcstfd40i.apps.googleusercontent.com',
+    iosClientId: '138749187378-7t4buaqsl6acp97uso977fd13k1hgdhl.apps.googleusercontent.com',
+    iosBundleId: 'de.poxh.hustle',
   );
 }

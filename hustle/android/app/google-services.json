@@ -12,7 +12,12 @@
           "package_name": "com.example.hustle"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "138749187378-n6hjvh293gvrtmj4jlpkp7a5m96ljai0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAtSEI2shCD9HaCEGZIOchBZG_mP12tedw"
@@ -20,7 +25,63 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "138749187378-n6hjvh293gvrtmj4jlpkp7a5m96ljai0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "138749187378-60hpn4kpqbt1ttcfnc2f9ljt1dr73ngo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hustle"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138749187378:android:65ade0ec1e5e908e86b32b",
+        "android_client_info": {
+          "package_name": "de.poxh.hustle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "138749187378-qeco7ch1o8dl7edldprokk9qcstfd40i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.poxh.hustle",
+            "certificate_hash": "b1d11f7c2b366b55ef2edc7e4e3d50b5589fd8a5"
+          }
+        },
+        {
+          "client_id": "138749187378-n6hjvh293gvrtmj4jlpkp7a5m96ljai0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtSEI2shCD9HaCEGZIOchBZG_mP12tedw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "138749187378-n6hjvh293gvrtmj4jlpkp7a5m96ljai0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "138749187378-60hpn4kpqbt1ttcfnc2f9ljt1dr73ngo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hustle"
+              }
+            }
+          ]
         }
       }
     }
