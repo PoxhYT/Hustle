@@ -6,6 +6,4 @@ class TodoAPI {
   TodoAPI({
     required this.authAPI,
   });
-
-  
 }
