@@ -10,4 +10,11 @@ class Todo {
       finished: json['finished'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'finished': finished,
+    };
+  }
 }

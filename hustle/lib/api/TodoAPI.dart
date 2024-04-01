@@ -30,4 +30,30 @@ class TodoAPI {
     }
     return todos;
   }
+
+  Future<void> addTodo(Todo newTodo) async {
+    var logger = Logger(printer: PrettyPrinter());
+
+    try {
+      DocumentReference todosRef =
+          FirebaseFirestore.instance.collection('todos').doc(authAPI.getUID());
+
+      DocumentSnapshot todosSnapshot = await todosRef.get();
+
+      if (todosSnapshot.exists) {
+        Map<String, dynamic> todosData =
+            todosSnapshot.data() as Map<String, dynamic>;
+        List<dynamic> existingTodos = todosData['todos'] ?? [];
+        existingTodos.add(newTodo.toJson());
+        await todosRef.update({'todos': existingTodos});
+        logger.i("ADDED NEW TODO");
+      } else {
+        await todosRef.set({
+          'todos': [newTodo.toJson()]
+        });
+      }
+    } catch (e) {
+      print('Error adding todo: $e');
+    }
+  }
 }
