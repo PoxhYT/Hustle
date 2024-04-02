@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hustle/api/AuthAPI.dart';
 import 'package:hustle/api/TodoAPI.dart';
 import 'package:hustle/models/Todo.dart';
@@ -31,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
         body: Stack(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 15,
               ),
@@ -41,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
                     future: todoAPI.getTodos(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
+                        return const CircularProgressIndicator();
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       }
@@ -127,7 +126,7 @@ class _MainScreenState extends State<MainScreen> {
                       bottom: 20,
                       right: 20,
                     ),
-                    padding: EdgeInsets.only(left: 20, right: 20),
+                    padding: const EdgeInsets.only(left: 20, right: 20),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.blue),
@@ -147,7 +146,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget buildTodo(Todo todo, TodoAPI todoAPI) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 20),
       child: ListTile(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

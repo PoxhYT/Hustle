@@ -12,6 +12,8 @@ class TodoAPI {
   });
 
   Future<List<Todo>> getTodos() async {
+    var logger = Logger(printer: PrettyPrinter());
+
     List<Todo> todos = [];
     try {
       DocumentSnapshot todosSnapshot = await FirebaseFirestore.instance
@@ -27,7 +29,7 @@ class TodoAPI {
             .toList();
       }
     } catch (e) {
-      print('Error fetching data: $e');
+      logger.i('Error fetching data: $e');
     }
     return todos;
   }
@@ -54,11 +56,13 @@ class TodoAPI {
         });
       }
     } catch (e) {
-      print('Error adding todo: $e');
+      logger.i('Error adding todo: $e');
     }
   }
 
   Future<void> deleteTodo(Todo targetTodo) async {
+    var logger = Logger(printer: PrettyPrinter());
+
     try {
       DocumentReference todosRef =
           FirebaseFirestore.instance.collection('todos').doc(authAPI.getUID());
@@ -79,11 +83,13 @@ class TodoAPI {
         }
       }
     } catch (e) {
-      print('Error deleting todo: $e');
+      logger.i('Error deleting todo: $e');
     }
   }
 
   Future<bool> todoExists(String todoName) async {
+    var logger = Logger(printer: PrettyPrinter());
+
     try {
       DocumentReference todosRef =
           FirebaseFirestore.instance.collection('todos').doc(authAPI.getUID());
@@ -101,7 +107,7 @@ class TodoAPI {
         return false;
       }
     } catch (e) {
-      print('Error checking if todo exists: $e');
+      logger.i('Error checking if todo exists: $e');
       return false;
     }
   }
@@ -135,6 +141,8 @@ class TodoAPI {
   }
 
   Future<void> toggleTodoStatus(String todoName) async {
+    var logger = Logger(printer: PrettyPrinter());
+
     try {
       DocumentReference todosRef =
           FirebaseFirestore.instance.collection('todos').doc(authAPI.getUID());
@@ -157,13 +165,13 @@ class TodoAPI {
 
           await todosRef.update({'todos': existingTodos});
         } else {
-          print('Todo not found: $todoName');
+          logger.i('Todo not found: $todoName');
         }
       } else {
-        print('No todos found for the current user');
+        logger.i('No todos found for the current user');
       }
     } catch (e) {
-      print('Error toggling todo status: $e');
+      logger.i('Error toggling todo status: $e');
     }
   }
 }
