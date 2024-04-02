@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hustle/firebase_options.dart';
-import 'package:hustle/screens/LoginScreen.dart';
-import 'package:hustle/screens/MainScreen.dart';
+import 'package:hustle/screens/login_screen.dart';
+import 'package:hustle/screens/main_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

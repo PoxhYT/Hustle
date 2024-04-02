@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hustle/api/AuthAPI.dart';
-import 'package:hustle/api/TodoAPI.dart';
-import 'package:hustle/models/Todo.dart';
+import 'package:hustle/api/auth_api.dart';
+import 'package:hustle/api/todo_api.dart';
+import 'package:hustle/models/todo.dart';
 import 'package:logger/logger.dart';
 
 class MainScreen extends StatefulWidget {
@@ -115,10 +115,14 @@ class _MainScreenState extends State<MainScreen> {
                       Todo newTodo = Todo(name: name, finished: false);
                       await todoAPI.addTodo(newTodo);
                       _todoController.clear();
-                      setState(() {});
+                      if (mounted) {
+                        setState(() {});
+                      }
                     } else {
-                      await todoAPI.showTodoExistsDialog(name, context);
                       _todoController.clear();
+                      if (mounted) {
+                        await todoAPI.showTodoExistsDialog(name, this.context);
+                      }
                     }
                   },
                   child: Container(

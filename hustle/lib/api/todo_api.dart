@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:hustle/api/AuthAPI.dart';
-import 'package:hustle/models/Todo.dart';
+import 'package:hustle/api/auth_api.dart';
+import 'package:hustle/models/todo.dart';
 import 'package:logger/logger.dart';
 
 class TodoAPI {
