@@ -18,7 +18,7 @@ class TodoAPI {
     try {
       DocumentSnapshot todosSnapshot = await FirebaseFirestore.instance
           .collection('todos')
-          .doc(authAPI.getUID())
+          .doc("test_user_id")
           .get();
 
       if (todosSnapshot.exists) {
@@ -39,7 +39,7 @@ class TodoAPI {
 
     try {
       DocumentReference todosRef =
-          FirebaseFirestore.instance.collection('todos').doc(authAPI.getUID());
+          FirebaseFirestore.instance.collection('todos').doc("test_user_id");
 
       DocumentSnapshot todosSnapshot = await todosRef.get();
 
@@ -65,7 +65,7 @@ class TodoAPI {
 
     try {
       DocumentReference todosRef =
-          FirebaseFirestore.instance.collection('todos').doc(authAPI.getUID());
+          FirebaseFirestore.instance.collection('todos').doc("test_user_id");
 
       DocumentSnapshot todosSnapshot = await todosRef.get();
 
@@ -92,7 +92,7 @@ class TodoAPI {
 
     try {
       DocumentReference todosRef =
-          FirebaseFirestore.instance.collection('todos').doc(authAPI.getUID());
+          FirebaseFirestore.instance.collection('todos').doc("test_user_id");
 
       DocumentSnapshot todosSnapshot = await todosRef.get();
 
@@ -145,7 +145,7 @@ class TodoAPI {
 
     try {
       DocumentReference todosRef =
-          FirebaseFirestore.instance.collection('todos').doc(authAPI.getUID());
+          FirebaseFirestore.instance.collection('todos').doc("test_user_id");
 
       DocumentSnapshot todosSnapshot = await todosRef.get();
 
