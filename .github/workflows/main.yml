@@ -16,7 +16,7 @@ jobs:
       with:
         channel: 'stable'
     - name: Flutter test
-      run: flutter test
+      run: cd ./hustle && flutter test
     - name: Flutter analyze
       run: flutter analyze
     - name: Flutter build
