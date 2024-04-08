@@ -11,10 +11,6 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
     - name: Get all Flutter Packages
       run: cd ./hustle && flutter pub get
     - name: Flutter test
