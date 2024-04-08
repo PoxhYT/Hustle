@@ -15,8 +15,10 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
+    - name: Get all Flutter Packages
+      run: cd ./hustle && flutter pub get
     - name: Flutter test
-      run: cd ./hustle && flutter test
+      run:  flutter test
     - name: Flutter analyze
       run: flutter analyze
     - name: Flutter build
