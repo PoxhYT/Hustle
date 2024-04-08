@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hustle/api/auth_api.dart';
 import 'package:hustle/api/todo_api.dart';
@@ -5,7 +6,8 @@ import 'package:hustle/models/todo.dart';
 import 'package:logger/logger.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final FirebaseFirestore firebaseFirestore;
+  const MainScreen({super.key, required this.firebaseFirestore});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -22,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    TodoAPI todoAPI = TodoAPI(authAPI: authAPI);
+    TodoAPI todoAPI = TodoAPI(authAPI: authAPI, firestore: widget.firebaseFirestore);
 
     return SafeArea(
       child: Scaffold(
@@ -134,10 +136,7 @@ class _MainScreenState extends State<MainScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.blue),
-                    child: const Text(
-                      '+',
-                      style: TextStyle(fontSize: 40, color: Colors.white),
-                    ),
+                    child: Icon(Icons.add, size: 15, color: Colors.white)
                   ),
                 ),
               ]),

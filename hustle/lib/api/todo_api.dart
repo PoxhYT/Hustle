@@ -6,9 +6,11 @@ import 'package:logger/logger.dart';
 
 class TodoAPI {
   final AuthAPI authAPI;
+  final FirebaseFirestore firestore;
 
   TodoAPI({
     required this.authAPI,
+    required this.firestore
   });
 
   Future<List<Todo>> getTodos() async {
@@ -16,7 +18,7 @@ class TodoAPI {
 
     List<Todo> todos = [];
     try {
-      DocumentSnapshot todosSnapshot = await FirebaseFirestore.instance
+      DocumentSnapshot todosSnapshot = await firestore
           .collection('todos')
           .doc("test_user_id")
           .get();
@@ -39,7 +41,7 @@ class TodoAPI {
 
     try {
       DocumentReference todosRef =
-          FirebaseFirestore.instance.collection('todos').doc("test_user_id");
+          firestore.collection('todos').doc("test_user_id");
 
       DocumentSnapshot todosSnapshot = await todosRef.get();
 
@@ -65,7 +67,7 @@ class TodoAPI {
 
     try {
       DocumentReference todosRef =
-          FirebaseFirestore.instance.collection('todos').doc("test_user_id");
+          firestore.collection('todos').doc("test_user_id");
 
       DocumentSnapshot todosSnapshot = await todosRef.get();
 
@@ -92,7 +94,7 @@ class TodoAPI {
 
     try {
       DocumentReference todosRef =
-          FirebaseFirestore.instance.collection('todos').doc("test_user_id");
+          firestore.collection('todos').doc("test_user_id");
 
       DocumentSnapshot todosSnapshot = await todosRef.get();
 
@@ -145,7 +147,7 @@ class TodoAPI {
 
     try {
       DocumentReference todosRef =
-          FirebaseFirestore.instance.collection('todos').doc("test_user_id");
+          firestore.collection('todos').doc("test_user_id");
 
       DocumentSnapshot todosSnapshot = await todosRef.get();
 

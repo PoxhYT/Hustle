@@ -43,6 +43,9 @@ dependencies:
   logger: ^2.2.0
   flutter_screenutil: ^5.9.0
   cloud_firestore: ^4.15.10
+  mockito: ^5.4.4
+  fake_cloud_firestore: ^2.4.9
+  firebase_storage_mocks: ^0.6.1
 
 dev_dependencies:
   flutter_test:
