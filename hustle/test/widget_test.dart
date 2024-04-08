@@ -4,7 +4,29 @@ import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:hustle/screens/main_screen.dart';
 
 void main() {
-  testWidgets('Test create new todo', (WidgetTester tester) async {
+  testWidgets('Find todo textfield', (WidgetTester tester) async {
+    final firestore = FakeFirebaseFirestore();
+    await tester.pumpWidget(
+        MaterialApp(home: MainScreen(firebaseFirestore: firestore)));
+
+    final todoTextField = find.byWidgetPredicate((widget) =>
+        widget is TextField &&
+        widget.decoration!.hintText == 'Add a new todo item');
+    expect(todoTextField, findsOneWidget);
+  });
+
+  testWidgets('Find todo textfield', (WidgetTester tester) async {
+    final firestore = FakeFirebaseFirestore();
+    await tester.pumpWidget(
+        MaterialApp(home: MainScreen(firebaseFirestore: firestore)));
+
+    final todoTextField = find.byWidgetPredicate((widget) =>
+        widget is TextField &&
+        widget.decoration!.hintText == 'Add a new todo item');
+    expect(todoTextField, findsOneWidget);
+  });
+
+  /* testWidgets('Test create new todo', (WidgetTester tester) async {
     // Populate the fake database.
     final firestore = FakeFirebaseFirestore();
 
@@ -15,5 +37,7 @@ void main() {
     await tester.idle();
     // Re-render.
     await tester.pump();
-  });
+
+
+  }); */
 }

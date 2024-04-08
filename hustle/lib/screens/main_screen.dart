@@ -136,7 +136,7 @@ class _MainScreenState extends State<MainScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.blue),
-                    child: Icon(Icons.add, size: 15, color: Colors.white)
+                    child: const Icon(Icons.add, size: 15, color: Colors.white)
                   ),
                 ),
               ]),
