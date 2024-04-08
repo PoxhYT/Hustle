@@ -18,7 +18,7 @@ jobs:
     - name: Get all Flutter Packages
       run: cd ./hustle && flutter pub get
     - name: Flutter test
-      run:  flutter test
+      run: cd ./hustle && flutter test
     - name: Flutter analyze
       run: flutter analyze
     - name: Flutter build
