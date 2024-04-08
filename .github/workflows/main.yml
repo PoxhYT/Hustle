@@ -20,6 +20,6 @@ jobs:
     - name: Flutter test
       run: cd ./hustle && flutter test
     - name: Flutter analyze
-      run: flutter analyze
+      run: cd ./hustle && flutter analyze
     - name: Flutter build
-      run: flutter build apk
+      run: cd ./hustle && flutter build apk
